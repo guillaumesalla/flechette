@@ -39,7 +39,7 @@ class Flechette{
             inquirer.prompt(nomQuestions).then(nomAnswers => {
                 const listeNoms = Object.values(nomAnswers)
                 for(let val = 0; val < listeNoms.length; val++){
-                    jeu.joueurs.push(listeNoms[val])
+                    this.joueurs.push(listeNoms[val])
                 }
                 console.log(jeu.joueurs)
             })
@@ -61,6 +61,8 @@ class Flechette{
     ajouterJoueur(...arg){
         this.joueurs = [...this.joueurs, ...arg]
     }
+   
+    //le tour du monde 
     leTourDuMonde(){
         var pointsTourDuMonde = [1,5,10,15,20]
 
@@ -77,14 +79,14 @@ class Flechette{
         inquirer.prompt(tirs).then(tirAnswers => {
             const listeTirs = Object.values(tirAnswers)
             for(let val = 0; val < listeTirs.length; val++){
-                jeu.tirsJoueurs.push(listeTirs[val])
+                this.tirsJoueurs.push(listeTirs[val])
             }
             console.log(jeu.tirsJoueurs)
         })
 
         var i = 0
             for (let a = 0; a < pointsTourDuMonde.length; a++) {
-                while (this.tirs[i] != this.pointsTourDuMonde[a]) {
+                while (this.tirsJoueur[i] != this.pointsTourDuMonde[a]) {
                     console.log("Raté")
                     i++
                 }
@@ -96,10 +98,40 @@ class Flechette{
             }
             console.log("C'est gagné ! Coolos")
     }
+    
+    //le 301
     le301()
     {
-        //faire le code du 301
+        for(let val = 0; val < this.joueurs.length; val++){
+            this.tirsJoueur[val] = 301;
+            let partie = "en cours"
+            
+            while (partie != "termine") {
+                let tirs = []
+                tirs.push(
+                    {
+                            type: 'input',
+                            name: `tir-${i}`,
+                            message: `score au tir ${i} :`
+                    })
+            
+                inquirer.prompt(tirs).then(tirAnswers => {
+                    const listeTirs = Object.values(tirAnswers)
+                    for(let val = 0; val < listeTirs.length; val++){
+                        this.tirsJoueurs.push(this.tirsJoueur[val] - listeTirs[val])
+                    }
+                    console.log(jeu.tirsJoueurs)
+                })
+                if(this.tirsJoueur == 0)
+                {
+                    partie = "termine"
+                    break
+                }
+            }
+        }
     }
+
+    //le cricket
     leCricket()
     {
         //faire le code du cricket
