@@ -102,11 +102,13 @@ class Flechette{
     //le 301
     le301()
     {
+        let partie = "en cours"
         for(let val = 0; val < this.joueurs.length; val++){
-            this.tirsJoueur[val] = 301;
-            let partie = "en cours"
-            
-            while (partie != "termine") {
+            this.tirsJoueur[val] = 301
+        }
+
+        while (partie != "termine") {
+            for(let val = 0; val < this.joueurs.length; val++){
                 let tirs = []
                 tirs.push(
                     {
@@ -117,16 +119,20 @@ class Flechette{
             
                 inquirer.prompt(tirs).then(tirAnswers => {
                     const listeTirs = Object.values(tirAnswers)
-                    for(let val = 0; val < listeTirs.length; val++){
-                        this.tirsJoueurs.push(this.tirsJoueur[val] - listeTirs[val])
+                    let score = this.tirsJoueur[val] - listeTirs[val]
+                    if(score < 0)
+                    {
+                        score = 0 - score
                     }
-                    console.log(jeu.tirsJoueurs)
+                    this.tirsJoueurs[val] = score
+                    console.log(jeu.tirsJoueurs)  
+                    if(this.tirsJoueurs[val] == 0)
+                    {
+                        partie = "termine"
+                        break
+                    }
                 })
-                if(this.tirsJoueur == 0)
-                {
-                    partie = "termine"
-                    break
-                }
+  
             }
         }
     }
