@@ -106,7 +106,7 @@ class Flechette{
     }
 }
 
-console.log('Bienvenu sur le jeu de flechettes');
+console.log('jeu de flechettes');
 
 const jeu = new Flechette()
 
