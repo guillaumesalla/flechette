@@ -1,0 +1,72 @@
+'use strict';
+var inquirer = require('inquirer');
+const readline = require('readline');
+
+class Flechette{
+    constructor(){
+        this.joueurs = []
+        this.tirs = []
+        this.pointsTourDuMonde = [1,5,10,15,20]
+    }
+    ajouterJoueur(...arg){
+        this.joueurs = [...this.joueurs, ...arg]
+    }
+    leTourDuMonde(...arg){
+        this.tirs = [...arg]
+        var i = 0
+            for (let a = 0; a < this.pointsTourDuMonde.length; a++) {
+                while (this.tirs[i] != this.pointsTourDuMonde[a]) {
+                    console.log("Raté")
+                    i++
+                }
+                if (this.tirs[i] == 20) {
+                    break
+                }
+                console.log("bravo mais c'est pas fini")
+                i++
+            }
+            console.log("C'est gagné ! Coolos")
+    }
+}
+
+console.log('Bienvenu sur le jeu de flechettes');
+
+const jeu = new Flechette()
+
+var questions = [
+    {
+        type: 'number',
+        name: 'nombreJoueurs',
+        message: 'combien de joueur : '
+    },
+    {
+        type: 'rawlist',
+        name: 'modeDeJeu',
+        message: 'choisissez votre mode de jeu :',
+        choices: ['le tour du Monde', 'le 301', 'le Cricket']
+      },
+];
+
+inquirer.prompt(questions).then(answers => {
+
+    const nbJoueur = answers.nombreJoueurs;
+    let nomQuestions = []
+
+    for (let i = 0; i < nbJoueur; i++) {
+        nomQuestions.push(
+            {
+                    type: 'input',
+                    name: `nomJoueur-${i}`,
+                    message: 'Nom du joueur :'
+            })
+    }
+    inquirer.prompt(nomQuestions).then(nomAnswers => {
+        const listeNoms = Object.values(nomAnswers)
+        for(let val = 0; val < listeNoms.length; val++){
+            jeu.joueurs.push(listeNoms[val])
+        }
+        console.log(jeu.joueurs)
+    })
+});
+
+
