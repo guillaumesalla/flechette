@@ -2,24 +2,24 @@ const mongoose = require('mongoose')
 
 let UserSchema = mongoose.Schema({
     id: {
-        type: number | string,
+        type: String,
     },
     mode: {
-        type: string,
+        type: String,
         // 'around-the-world' | '301' | 'cricket'
     },
     name: {
-        type: string,
+        type: String,
     },
     currentPlayerId: {
-        type: number | null | string,
+        type: String,
     },
     status: {
-        type: string,
+        type: String,
         //'draft' | 'started' | 'ended'
     },
     createdAt: {
-        type: datetime,
+        type: String,
     }
 }, { collection: 'game' });
 

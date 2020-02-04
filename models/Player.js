@@ -2,21 +2,21 @@ const mongoose = require('mongoose')
 
 let UserSchema = mongoose.Schema({
     id: {
-        type: number | string,
+        type: String,
     },
     name: {
-        type: string,
+        type: String,
     },
     email: {
-        type: string,
+        type: String,
     },
     gameWin: {
-        type: number,
+        type: String,
     },
     gameLost: {
-        type: number,
+        type: String,
     },
     createdAt: {
-        type: datetime,
+        type: String,
     }
 }, { collection: 'player' });

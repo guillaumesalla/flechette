@@ -69,4 +69,80 @@ inquirer.prompt(questions).then(answers => {
     })
 });
 
+-------------------------------------------------------------------
+
+
+//routes.js 
+.put(function (req, res) {
+        Game.findById(req.params.game_id, function (err, r) {
+            if (err) {
+                res.send(err);
+            }
+            r.id = req.body.id,
+                r.mode = req.body.mode,
+                r.name = req.body.name,
+                r.status = req.body.status,
+                r.createdAt = req.body.createdAt
+            r.save(function (err) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json({ message: 'Bravo, mise à jour des données OK' });
+            });
+        });
+    })
+
+   
+------------------------------------------------------------------------------------
+
+
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const app = express();
+const Player = require('./models/Player');
+const Game = require('./models/Game');
+
+
+mongoose.connect('mongodb://localhost:27017', {
+    useCreateIndex: true,
+    useNewUrlParser: true, useUnifiedTopology: true
+})
+
+mongoose.connection.on('error', error => console.log(error));
+mongoose.Promise = global.Promise;
+
+app.use(bodyParser.urlencoded({ extended: false }));
+
+const routes = require('./routes.js');
+app.use('/', routes);
+
+app.use(function (err, req, res, next) {
+    res.status(err.status || 500);
+    res.json({ error: err });
+});
+
+app.listen(3000, () => {
+    console.log('Server started')
+});
+
+-------------------------------------------------------------------
+
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
+// Connection URLs
+const url = 'mongodb://localhost:27017';
+// Database Name
+const dbName = 'myproject';
+// Create a new MongoClient
+const client = new MongoClient(url, { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true });
+// Use connect method to connect to the Server
+client.connect(function (err) {
+    assert.equal(null, err);
+    console.log("Connection reussi : " + url);
+    const db = client.db(dbName);
+    client.close();
+});
+console.log("Connection echouée");
+
 
