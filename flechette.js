@@ -103,6 +103,7 @@ class Flechette {
             }
         }
     }
+
     //le 301
     le301() {
         let partie = "en cours"
