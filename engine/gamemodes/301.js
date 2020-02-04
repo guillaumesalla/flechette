@@ -1,3 +1,4 @@
+'use strict';
 
 class Le301 extends Gamemode {
     constructor() {

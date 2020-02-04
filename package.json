@@ -5,6 +5,8 @@
     "main": "api.js",
     "dependencies": {
         "express": "^4.17.1",
+        "inquirer": "7.0.4",
+        "module": "1.2.5",
         "mongoose": "^5.8.4"
     },
     "devDependencies": {},

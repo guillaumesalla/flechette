@@ -5,10 +5,6 @@ const tmd = require('./engine/gamemodes/around-the-world')
 const cricket = require('./engine/gamemodes/cricket')
 const le301 = require('./engine/gamemodes/301')
 
-'use strict';
-var inquirer = require('inquirer');
-const readline = require('readline');
-
 class Gamemode {
     constructor() {
         this.joueurs = []
