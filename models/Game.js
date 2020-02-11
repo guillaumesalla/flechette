@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-let UserSchema = mongoose.Schema({
+let GameSchema = mongoose.Schema({
     id: {
         type: String,
     },
@@ -21,5 +21,5 @@ let UserSchema = mongoose.Schema({
     createdAt: {
         type: String,
     }
-}, { collection: 'game' });
-
+})
+module.exports = mongoose.model('game', GameSchema);

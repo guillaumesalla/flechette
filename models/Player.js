@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-let UserSchema = mongoose.Schema({
+let PlayerSchema = mongoose.Schema({
     id: {
         type: String,
     },
@@ -19,4 +19,5 @@ let UserSchema = mongoose.Schema({
     createdAt: {
         type: String,
     }
-}, { collection: 'player' });
+})
+module.exports = mongoose.model('player', PlayerSchema);

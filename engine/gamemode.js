@@ -71,6 +71,3 @@ console.log('jeu de flechettes');
 const jeu = new Gamemode()
 
 jeu.departDuJeu()
-
-
-

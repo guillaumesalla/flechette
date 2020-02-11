@@ -40,3 +40,21 @@ Contraintes techniques:
 
 **2eme Partie (input distant)**
 
+
+
+
+            var i = 0
+            for (let a = 0; a < pointsTourDuMonde.length; a++) {
+                while (this.tirsJoueur[i] != this.pointsTourDuMonde[a]) {
+                    console.log("Raté")
+                    i++
+
+                    if (this.tirs[i] == 20) {
+                        break
+                        done = true;
+                        console.log("C'est gagné ! Coolos")
+                    }
+                    console.log("bravo mais c'est pas fini")
+                    i++
+                }
+            }
