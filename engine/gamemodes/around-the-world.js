@@ -1,51 +1,47 @@
 'use strict';
+const Gamemode = require('../gamemode')
 
-class AroundTheWorld extends Gamemode {
-    constructor() {
-        super()
+
+class AroundTheWorld {
+    constructor()
+    async tirerFlechette(message, callback) {
+        const questions = [{
+            type: 'number',
+            name: 'score',
+            message
+        }];
+        await inquirer.prompt(questions).then(data => {
+            const score = data['score'];
+            callback(score);
+        });
     }
-    leTourDuMonde() {
-        var pointsTourDuMonde = [1, 5, 10, 15, 20]
-        let done = false
-        let tirs = []
-        let sj = [0, 0, 0]
+
+    async leTourDuMonde() {
+        let done = false;
+        let scores = this.joueurs.map(() => 0);
 
         while (!done) {
-            for (let j = 0; j <= nbJoueur; j++) {
-                console.log(jeu.joueurs[j])
-                for (let i = 0; i < 3; i++) {
-                    tirs.push(
-                        {
-                            type: 'input',
-                            name: `tir-${i}`,
-                            message: `score au tir ${i} :`
-                        })
-                }
-                inquirer.prompt(tirs).then(tirAnswers => {
-                    const listeTirs = Object.values(tirAnswers)
-                    for (let val = 0; val < listeTirs.length; val++) {
-                        this.jeu.tirsJoueurs.push(listeTirs[val])
-                    }
-                    console.log(jeu.tirsJoueurs)
-                })
-                for (let i = 0; i < 3; i++) {
-                    if (this.jeu.tirsJoueurs == pointsTourDuMonde[sj[j]]) {
-                        sj[j]++
-                        if (sj[j] == 5) {
-                            console.log("bravo vous avez fini")
-                            done = true;
+            for (let player = 0; (player < this.joueurs.length && !done); player++) {
+                console.log(this.joueurs[player] + ', à vous de jouer!');
+                console.log('Votre score: ' + scores[player]);
+
+                for (let i = 0; (i < 3 && !done); i++) {
+                    await this.tirerFlechette('Fléchette ' + (i + 1), score => {
+                        const currentScore = scores[player];
+                        if (currentScore == (score - 1)) {
+                            scores[player] = score;
+                            if (score == 5) {
+                                done = true;
+                            }
                         }
-                        else {
-                            console.log("bravo tu est passé au palier suivant")
-                        }
-                    }
-                    else {
-                        console.log("raté")
-                    }
+                    });
                 }
-                this.jeu.tirsJoueurs = []
             }
         }
-    }
+        const resultats = this.joueurs
+            .map((name, index) => ({ name, score: scores[index] }))
+            .sort((a, b) => b.score - a.score);
 
+        console.table(resultats);
+    }
 }

@@ -1,8 +1,6 @@
 const express = require('express')
 
 const mongoose = require('mongoose')
-const Game = require('./models/Game') // on importe notre model
-const Player = require('./models/Player') // on importe notre model
 mongoose.connect('mongodb://localhost:27017', { useNewUrlParser: true });
 
 let app = express(); // création de l'objet représentant notre application express

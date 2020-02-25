@@ -1,39 +1,52 @@
 'use strict';
+const Gamemode = require('../gamemode')
 
-class Le301 extends Gamemode {
-    constructor() {
-        super()
+
+class Le301 {
+
+
+    async tirerFlechette(message, callback) {
+        const questions = [{
+            type: 'number',
+            name: 'score',
+            message
+        }];
+        await inquirer.prompt(questions).then(data => {
+            const score = data['score'];
+            callback(score);
+        });
     }
-    le301() {
-        let partie = "en cours"
-        for (let val = 0; val < this.joueurs.length; val++) {
-            this.tirsJoueur[val] = 301
-        }
 
-        while (partie != "termine") {
-            for (let val = 0; val < this.joueurs.length; val++) {
-                let tirs = []
-                tirs.push(
-                    {
-                        type: 'input',
-                        name: `tir-${i}`,
-                        message: `score au tir ${i} :`
-                    })
+    async  le301() {
+        let done = false;
+        let scores = this.joueurs.map(() => 301);
 
-                inquirer.prompt(tirs).then(tirAnswers => {
-                    const listeTirs = Object.values(tirAnswers)
-                    let score = this.tirsJoueur[val] - listeTirs[val]
-                    if (score < 0) {
-                        score = 0 - score
-                    }
-                    this.tirsJoueurs[val] = score
-                    console.log(jeu.tirsJoueurs)
-                    if (this.tirsJoueurs[val] == 0) {
-                        partie = "termine"
-                        break
-                    }
-                })
+        while (!done) {
+            for (let player = 0; (player < this.joueurs.length && !done); player++) {
+                console.log(this.joueurs[player] + ', à vous de jouer!');
+                console.log('Votre score: ' + scores[player]);
 
+                for (let i = 0; (i < 3 && !done); i++) {
+                    const message = 'Fléchette ' + (i + 1);
+                    await this.tirerFlechette(message, scoreFlechette => {
+                        const scoreActuel = scores[player];
+
+                        if (scoreFlechette > 20) {
+                            console.log('entrer un scrore inférieur a 20')
+                        }
+                        else {
+                            const nouveauScore = scoreActuel - scoreFlechette;
+                            if (nouveauScore >= 0) {
+                                scores[player] = nouveauScore;
+                                if (nouveauScore == 0) {
+                                    done = true;
+                                }
+                            } else {
+                                console.log('score en dessous de zero');
+                            }
+                        }
+                    });
+                }
             }
         }
     }

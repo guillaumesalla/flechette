@@ -1,9 +1,9 @@
 'use strict';
+const Gamemode = require('../gamemode')
 
-class cricket extends Gamemode {
-    constructor() {
-        super()
-    }
+
+class Cricket {
+
     leCricket() {
         console.log("faire le code du cricket")
     }

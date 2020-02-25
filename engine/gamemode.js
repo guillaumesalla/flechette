@@ -1,22 +1,24 @@
 'use strict';
 var inquirer = require('inquirer');
 const readline = require('readline');
-const tmd = require('./engine/gamemodes/around-the-world')
-const cricket = require('./engine/gamemodes/cricket')
-const le301 = require('./engine/gamemodes/301')
+const tmd = require('./gamemodes/around-the-world')
+const cricket = require('./gamemodes/cricket')
+const le301 = require('./gamemodes/301')
 
 class Gamemode {
+    modeJeu;
     constructor() {
-        this.joueurs = []
-        this.tirsJoueurs = []
-        this.scoreJoueurs = []
+        this.joueurs = [];
+        this.nbJoueur = 2;
     }
+
+
     departDuJeu() {
-        var questions = [
+        let questions = [
             {
                 type: 'number',
                 name: 'nombreJoueurs',
-                message: 'combien de joueur : '
+                message: 'combien de joueur :'
             },
             {
                 type: 'rawlist',
@@ -27,37 +29,38 @@ class Gamemode {
         ];
 
         inquirer.prompt(questions).then(answers => {
-            const nbJoueur = answers.nombreJoueurs;
-            let nomQuestions = []
+            // ajouter nom joueur
+            this.nbJoueur = answers['nombreJoueurs'];
+            this.modeJeu = answers['modeDeJeu'];
 
-            for (let i = 0; i < nbJoueur; i++) {
-                nomQuestions.push(
-                    {
-                        type: 'input',
-                        name: `nomJoueur-${i}`,
-                        message: 'Nom du joueur :'
-                    })
+            let nomQuestions = [];
+            for (let i = 0; i < this.nbJoueur; i++) {
+                nomQuestions.push({
+                    type: 'input',
+                    name: 'nomJoueur' + i,
+                    message: 'Nom du joueur ' + i,
+                });
             }
+
+            // inscrire dans tableau
             inquirer.prompt(nomQuestions).then(nomAnswers => {
-                const listeNoms = Object.values(nomAnswers)
-                for (let val = 0; val < listeNoms.length; val++) {
-                    this.joueurs.push(listeNoms[val])
-                }
-                console.log(jeu.joueurs)
-            })
+                const listeNoms = Object.values(nomAnswers);
+                this.joueurs = listeNoms;
 
-            if (answers.modeDeJeu == 'le tour du Monde') {
-                const game1 = new AroundTheWorld()
-                game1.leTourDuMonde()
-            }
-            if (answers.modeDeJeu == 'le 301') {
-                const game2 = new AroundTheWorld()
-                game2.le301()
-            }
-            if (answers.modeDeJeu == 'le Cricket') {
-                const game3 = new AroundTheWorld()
-                game3.leCricket()
-            }
+                if (answers.modeDeJeu == 'le tour du Monde') {
+                    const game1 = new AroundTheWorld()
+                    game1.leTourDuMonde()
+                }
+                if (answers.modeDeJeu == 'le 301') {
+                    const game2 = new Le301()
+                    game2.le301()
+                }
+                if (answers.modeDeJeu == 'le Cricket') {
+                    const game3 = new Cricket()
+                    game3.leCricket()
+                }
+
+            })
         });
     }
 
